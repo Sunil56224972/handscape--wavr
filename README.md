@@ -2,17 +2,9 @@
 
 <img src="https://capsule-render.vercel.app/api?type=venom&color=0:020318,50:0d1f5c,100:18c0ff&height=300&section=header&text=Handscape-Wavr&fontSize=90&fontColor=ffffff&animation=fadeIn&fontAlignY=55&desc=Your%20hand%20is%20the%20controller.%20The%20universe%20listens.&descSize=18&descAlignY=75&descAlign=50" width="100%"/>
 
-<!-- Left hand animated -->
-<img src="https://readme-typing-svg.demolab.com?font=Noto+Color+Emoji&size=48&duration=500&pause=100&color=18C0FF&center=true&vCenter=true&width=70&height=65&lines=🤚;✋;🖐️;👋;🤙;👐" alt="left-hand" />
-<img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=20&duration=2500&pause=800&color=18C0FF&center=true&vCenter=true&width=560&height=65&lines=25%2C000+particles+obey+your+every+move...;Pinch+to+collapse+the+universe+🤌;Open+your+fist+—+watch+it+explode+💥;No+keyboard.+No+mouse.+Just+your+hand+✋" alt="Typing SVG" />
-<!-- Right hand animated -->
-<img src="https://readme-typing-svg.demolab.com?font=Noto+Color+Emoji&size=48&duration=500&pause=100&color=ff4d88&center=true&vCenter=true&width=70&height=65&lines=🤚;👐;✋;👋;🖐️;🤙" alt="right-hand" />
-
-</div>
+<img src="banner.gif" width="100%" alt="Handscape-Wavr Banner"/>
 
 <br/>
-
-<div align="center">
 
 [![Live Demo](https://img.shields.io/badge/🚀_LIVE_DEMO-000000?style=for-the-badge&logoColor=18c0ff&labelColor=0d1f5c&color=18c0ff)](https://Sunil56224972.github.io/Handscape-Wavr)
 [![Stars](https://img.shields.io/github/stars/Sunil56224972/Handscape-Wavr?style=for-the-badge&logo=starship&color=ff4d88&labelColor=0d0d0d)](https://github.com/Sunil56224972/Handscape-Wavr/stargazers)
@@ -61,7 +53,7 @@ This is not a demo. This is a window into something that feels alive.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        Handscape-Wavr                              │
+│                        Handscape-Wavr                           │
 │                                                                 │
 │  ┌──────────────┐    ┌──────────────┐    ┌──────────────────┐  │
 │  │   WEBCAM     │───▶│  MEDIAPIPE   │───▶│  HAND LANDMARKS  │  │
@@ -76,19 +68,11 @@ This is not a demo. This is a window into something that feels alive.
 │                                                   │             │
 │  ┌──────────────────────────────────────┐         │             │
 │  │         THREE.js SCENE               │◀────────┘             │
-│  │                                      │                       │
 │  │  ┌──────────┐   ┌────────────────┐   │                       │
 │  │  │ 25,000   │   │  GLSL VERTEX   │   │                       │
 │  │  │PARTICLES │──▶│    SHADER      │   │                       │
-│  │  │BufferGeo │   │  uHandPos      │   │                       │
-│  │  └──────────┘   │  uHandTension  │   │                       │
-│  │                 │  uMorph        │   │                       │
-│  │                 └────────────────┘   │                       │
-│  │                                      │                       │
-│  │  ┌──────────────────────────────┐    │                       │
-│  │  │     ADDITIVE BLENDING        │    │                       │
-│  │  │   Cinematic glow effect      │    │                       │
-│  │  └──────────────────────────────┘    │                       │
+│  │  │BufferGeo │   │  uHandTension  │   │                       │
+│  │  └──────────┘   └────────────────┘   │                       │
 │  └──────────────────────────────────────┘                       │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -114,8 +98,8 @@ pos += normalize(toHand) * (uHandTension * 0.4 / dist);
 ```glsl
 // Soft circular glow — no textures needed, pure math
 float d = dot(uv, uv);
-if (d > 1.0) discard;  // Kill square corners → perfect circle
-float alpha = smoothstep(1.0, 0.0, d);  // Fade at edges
+if (d > 1.0) discard;
+float alpha = smoothstep(1.0, 0.0, d);
 
 // Color shifts to hot pink when your hand is tense
 vec3 color = mix(baseColor, hot, uHandTension);
@@ -154,19 +138,13 @@ Landmark 8  →  Index tip     ┘  distance = tension
 
 **Tension formula:**
 ```js
-// 3D distance between thumb and index finger
 let tension = Math.sqrt(dx*dx + dy*dy + dz*dz);
-
-// Invert and clamp: 1.0 = fingers touching, 0.0 = fully open
 tension = 1.0 - clamp(tension * 3.0, 0.0, 1.0);
-
-// Smooth it so particles don't jitter
 const smoothed = lerp(current, tension, 0.25);
 ```
 
 **Auto-fireworks trigger:**
 ```js
-// Detects the moment you SNAP your fist closed
 if (smoothedTension > 0.85 && lastTension < 0.4) {
   setShape("fireworks"); // 💥
 }
@@ -177,19 +155,19 @@ if (smoothedTension > 0.85 && lastTension < 0.4) {
 ## 〔 GETTING STARTED 〕
 
 ```bash
-# Option 1 — Just open it (literally)
+# Option 1 — Just open it
 open index.html
 
-# Option 2 — Serve locally for camera access
+# Option 2 — Serve locally
 npx serve .
 # → http://localhost:3000
 
-# Option 3 — Deploy to GitHub Pages (free hosting)
-# Push to GitHub → Settings → Pages → main branch → Save
+# Option 3 — GitHub Pages (free hosting)
+# Push to GitHub → Settings → Pages → main → Save
 # Live at: https://Sunil56224972.github.io/Handscape-Wavr
 ```
 
-> 📸 Allow camera when prompted. Best in **Chrome** or **Edge**. No data leaves your device — hand tracking runs 100% locally.
+> 📸 Allow camera when prompted. Best in **Chrome** or **Edge**. Hand tracking runs 100% locally — no data leaves your device.
 
 ---
 
@@ -233,8 +211,6 @@ Handscape-Wavr/
 ---
 
 <div align="center">
-
----
 
 <img src="footer_banner.gif" width="100%" alt="footer"/>
 
